@@ -3,19 +3,15 @@ package org.runecraft.runechat;
 import com.google.inject.Inject;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
-import org.runecraft.runechat.command.GlobalCommand;
-import org.runecraft.runechat.command.TellCommand;
+import org.runecraft.runechat.command.chat.GlobalCommand;
+import org.runecraft.runechat.command.chat.TellCommand;
 import org.runecraft.runechat.listener.ChatListener;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.command.CommandResult;
-import org.spongepowered.api.command.CommandSource;
-import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.config.DefaultConfig;
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.event.Listener;
@@ -66,8 +62,14 @@ public class RuneChat {
                 .executor(new GlobalCommand())
                 .build();
 
+        CommandSpec ignore = CommandSpec.builder()
+                .arguments(GenericArguments.string(Text.of("message")))
+                .executor(new GlobalCommand())
+                .build();
+
         Sponge.getCommandManager().register(this, tell, "tell", "msg", "message");
         Sponge.getCommandManager().register(this, global, "g", "global");
+        Sponge.getCommandManager().register(this, ignore, "ignore", "ignorar");
     }
 
     @Listener

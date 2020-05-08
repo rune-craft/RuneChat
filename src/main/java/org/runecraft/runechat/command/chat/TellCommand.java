@@ -1,4 +1,4 @@
-package org.runecraft.runechat.command;
+package org.runecraft.runechat.command.chat;
 
 import org.runecraft.runechat.event.TellMessageEvent;
 import org.spongepowered.api.Sponge;

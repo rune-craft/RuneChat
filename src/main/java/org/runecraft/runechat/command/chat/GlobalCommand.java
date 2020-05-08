@@ -1,4 +1,4 @@
-package org.runecraft.runechat.command;
+package org.runecraft.runechat.command.chat;
 
 import jdk.nashorn.internal.objects.Global;
 import org.runecraft.runechat.event.GlobalChatEvent;

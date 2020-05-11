@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RuneChat:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RuneChat_jar</output-path>
+    <root id="archive" name="RuneChat.jar">
+      <element id="module-output" name="RuneChat.main" />
+    </root>
+  </artifact>
+</component>

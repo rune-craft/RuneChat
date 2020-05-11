@@ -12,8 +12,6 @@ public interface RuneChatEvent {
 
     void send();
 
-    Text formatMessage();
-
     Player getSender();
 
     Map<String, Text> getTags();

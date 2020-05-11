@@ -23,14 +23,11 @@ public class GlobalCommand implements CommandExecutor  {
             return CommandResult.builder().build();
         }
 
-        Text.Builder messageBuilder = Text.builder();
-        Collection<String> msg = args.getAll(Text.of("message"));
+        Text message = Text.of((String) args.getOne("message").get());
 
         Player sender = (Player) src;
 
-        msg.forEach(x -> messageBuilder.append(Text.of(x+ " ")));
-        GlobalChatEvent event = new GlobalChatEvent(sender, messageBuilder.build());
-
+        GlobalChatEvent event = new GlobalChatEvent(sender, message);
         Sponge.getEventManager().post(event);
 
         if(!event.isCancelled()){

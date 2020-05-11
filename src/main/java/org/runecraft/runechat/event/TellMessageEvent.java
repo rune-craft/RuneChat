@@ -1,21 +1,21 @@
 package org.runecraft.runechat.event;
 
+import org.runecraft.runechat.channel.manager.ChannelManager;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.effect.sound.SoundTypes;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.service.context.Context;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class TellMessageEvent extends AbstractRuneChatEvent {
 
     private Player destinatary;
 
     public TellMessageEvent(Player sender, Text message, Player destinatary) {
-        super(sender, message);
+        super(ChannelManager.getChannelInstance("tell").get(), sender, message, TextColors.LIGHT_PURPLE);
         this.destinatary = destinatary;
     }
 
@@ -31,7 +31,14 @@ public class TellMessageEvent extends AbstractRuneChatEvent {
 
     @Override
     public Set<Player> getViewers() {
-        return new HashSet<>(Collections.singletonList(destinatary));
+        List<Context> contexts = new ArrayList<>();
+        contexts.add(new Context("sender", sender.getName()));
+        contexts.add(new Context("destinatary", destinatary.getName()));
+
+        for(Player p : Sponge.getServer().getOnlinePlayers()){
+            if(channel.canView(p, contexts)) return new HashSet<>(Collections.singletonList(destinatary));
+        }
+        return new HashSet<>();
     }
 
     @Override
@@ -48,11 +55,6 @@ public class TellMessageEvent extends AbstractRuneChatEvent {
                 .build());
 
         return builder.build();
-    }
-
-    @Override
-    public Text formatMessage() {
-        return null;
     }
 
 }

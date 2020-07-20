@@ -68,7 +68,8 @@ public class RuneChat {
         Sponge.getEventManager().registerListener(this, AbstractRuneChatEvent.class, new StaffTagListener());
 
         CommandSpec tell = CommandSpec.builder()
-                .arguments(GenericArguments.remainingJoinedStrings(Text.of("message")))
+                .arguments(GenericArguments.string(Text.of("destinatario")),
+                        GenericArguments.remainingJoinedStrings(Text.of("message")))
                 .executor(new TellCommand())
                 .build();
 

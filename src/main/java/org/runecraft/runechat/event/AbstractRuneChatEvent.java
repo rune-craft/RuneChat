@@ -23,7 +23,6 @@ public abstract class AbstractRuneChatEvent extends AbstractEvent implements Can
 
     protected boolean cancelled;
     protected TextChannel channel;
-    protected Text.Builder messageBuilder;
     protected Player sender;
     private Text message;
     private TextColor messageColor;
@@ -33,6 +32,7 @@ public abstract class AbstractRuneChatEvent extends AbstractEvent implements Can
         this.sender = sender;
         this.channel = channel;
         this.message = message;
+        this.messageColor = messageColor;
     }
 
     public abstract Set<Player> getViewers();
@@ -50,25 +50,24 @@ public abstract class AbstractRuneChatEvent extends AbstractEvent implements Can
     }
 
     public Text formatedText(){
+        Text.Builder messageBuilder = Text.builder();
         if(channel.showTags()){
-            addTags();
-        }
-        messageBuilder.append(Text.builder(sender.getName()).color(TextColors.WHITE).onHover(TextActions.showText(getSenderInfos())).build());
-        messageBuilder.append(Text.builder().color(TextColors.LIGHT_PURPLE).append(Text.of(" ❱ ")).build());
-        messageBuilder.append(Text.builder().color(messageColor).append(message).build());
-        return messageBuilder.build();
-    }
-
-    private void addTags() {
-        String messagePattern = RuneChat.get().getConfig().getNode("chat").getNode("tagsPattern").getString();
-        List<String> avaibleTags = Arrays.asList(messagePattern.split(";"));
-        avaibleTags.forEach(tag -> {
-            tags.forEach((k,v) -> {
-                if(k.equalsIgnoreCase(tag)){
-                    messageBuilder.append(v).append(Text.builder(" ").build());
-                }
+            String messagePattern = RuneChat.get().getConfig().getNode("chat").getNode("tagsPattern").getString();
+            List<String> avaibleTags = Arrays.asList(messagePattern.split(";"));
+            System.out.println(tags.size());
+            avaibleTags.forEach(tag -> {
+                tags.forEach((k,v) -> {
+                    if(k.equalsIgnoreCase(tag)){
+                        messageBuilder.append(v).append(Text.builder(" ").build());
+                    }
+                });
             });
-        });
+        }
+        messageBuilder.append(Text.builder(sender.getName()).color(TextColors.WHITE)/*.onHover(TextActions.showText(getSenderInfos()))*/.build());
+
+        messageBuilder.append(Text.builder().color(TextColors.LIGHT_PURPLE).append(Text.of(" ❱ ")).build());
+        messageBuilder.append(message.toBuilder().color(messageColor).build());
+        return messageBuilder.build();
     }
 
     private Text getSenderInfos(){

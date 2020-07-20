@@ -15,9 +15,9 @@ public class GlobalChatEvent extends AbstractRuneChatEvent {
 
     public GlobalChatEvent(Player sender, Text message) {
         super(ChannelManager.getChannelInstance("global").get(), sender, message, TextColors.GRAY);
-        addTag("channel", Text.builder("[").color(TextColors.WHITE)
+        addTag("channel", Text.builder("[").color(TextColors.DARK_PURPLE)
                 .append(Text.builder("G").color(TextColors.LIGHT_PURPLE).build())
-                .append(Text.builder("]").color(TextColors.WHITE).build()).build());
+                .append(Text.builder("]").color(TextColors.DARK_PURPLE).build()).build());
     }
 
     @Override

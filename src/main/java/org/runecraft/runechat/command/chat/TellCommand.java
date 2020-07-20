@@ -23,20 +23,18 @@ public class TellCommand implements CommandExecutor {
             return CommandResult.builder().build();
         }
 
-        Text.Builder messageBuilder = Text.builder();
-        Collection<String> msg = args.getAll(Text.of("message"));
-
         Player sender = (Player) src;
-        Optional<Player> target = Sponge.getServer().getPlayer(msg.iterator().next());
+        Optional<Player> destinatario = Sponge.getServer().getPlayer((String)args.getOne("destinatario").get());
 
-        if(!target.isPresent()){
-            sender.sendMessage(Text.builder().color(TextColors.RED).append(Text.of("Esse jogador não está online.")).build());
+        if(!destinatario.isPresent()){
+            sender.sendMessage(Text.builder("Esse jogador não está online").color(TextColors.RED).build());
             return CommandResult.builder().build();
         }
 
-        msg.forEach(x -> messageBuilder.append(Text.of(x+ " ")));
+        Text message = Text.of(args.getOne("message").get());
 
-        TellMessageEvent tellEvent = new TellMessageEvent(sender, messageBuilder.build(), target.get());
+        TellMessageEvent tellEvent = new TellMessageEvent(sender, message, destinatario.get());
+
         Sponge.getEventManager().post(tellEvent);
         if(!tellEvent.isCancelled()){
             tellEvent.send();

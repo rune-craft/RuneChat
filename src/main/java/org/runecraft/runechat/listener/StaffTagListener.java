@@ -13,6 +13,7 @@ public class StaffTagListener implements EventListener<AbstractRuneChatEvent> {
     @Override
     public void handle(AbstractRuneChatEvent event) throws Exception {
         Player sender = event.getSender();
+        System.out.println("ENTROU AQUI PORR.A");
         if(sender.hasPermission("group.helper")){
             event.addTag("staffTag", Text.builder("[").color(TextColors.AQUA).style(TextStyles.BOLD)
                     .append(Text.builder("Ajudante").color(TextColors.AQUA).style(TextStyles.BOLD).build())
@@ -39,6 +40,7 @@ public class StaffTagListener implements EventListener<AbstractRuneChatEvent> {
                     .append(Text.builder("]").color(TextColors.DARK_BLUE).style(TextStyles.BOLD).build()).build());
         }
         if(sender.hasPermission("group.fundador")){
+            System.out.println("ADICIONOU A PERMI");
             event.addTag("staffTag", Text.builder("[").color(TextColors.RED).style(TextStyles.BOLD)
                     .append(Text.builder("Fundador").color(TextColors.RED).style(TextStyles.BOLD).build())
                     .append(Text.builder("]").color(TextColors.RED).style(TextStyles.BOLD).build()).build());

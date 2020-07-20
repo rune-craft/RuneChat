@@ -36,9 +36,9 @@ public class TellMessageEvent extends AbstractRuneChatEvent {
         contexts.add(new Context("destinatary", destinatary.getName()));
 
         for(Player p : Sponge.getServer().getOnlinePlayers()){
-            if(channel.canView(p, contexts)) return new HashSet<>(Collections.singletonList(destinatary));
+            if(channel.canView(p, contexts)) return new HashSet<>(Arrays.asList(sender, destinatary));
         }
-        return new HashSet<>();
+        return new HashSet<>(Collections.singletonList(sender));
     }
 
     @Override
@@ -46,11 +46,11 @@ public class TellMessageEvent extends AbstractRuneChatEvent {
         Text.Builder builder = Text.builder();
 
         builder.append(Text.builder()
-                .color(TextColors.GRAY).append(Text.of("[ "))
+                .color(TextColors.DARK_GREEN).append(Text.of("["))
                 .color(TextColors.GREEN).append(Text.of(sender.getName()))
-                .color(TextColors.DARK_GREEN).append(Text.of(" ➤ "))
+                .color(TextColors.DARK_GREEN).append(Text.of(" ➡ "))
                 .color(TextColors.GREEN).append(Text.of(destinatary.getName()))
-                .color(TextColors.GRAY).append(Text.of(" ]: "))
+                .color(TextColors.DARK_GREEN).append(Text.of("]: "))
                 .color(TextColors.GREEN).append(getMessage())
                 .build());
 
